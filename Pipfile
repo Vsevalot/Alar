@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[[source]]
+url = "https://nexus.local.playrix.com/repository/playrix-pypi/simple"
+verify_ssl = true
+name = "nexus"
+
+[packages]
+aiohttp = "==3.7.4"
+uvicorn = { extras = ["standard"], version = "0.15.0" }
+alembic = "==1.7.5"
+sqlalchemy = "==1.4.27"
+asyncpg = "==0.24.0"
+greenlet = "*"
+databases = "==0.5.3"
+orjson = "==3.6.7"
+fastapi = "==0.75.0"
+rodi = "==1.1.1"

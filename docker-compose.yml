@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  datasource_1:
+    build:
+      context: ./datasource_mock
+      dockerfile: Dockerfile
+    container_name: datasource_1
+    image: datasource
+    volumes:
+      - ./test_data/:/opt/app/data
+    environment:
+      - PATH_TO_DATA=/opt/app/data/${DATA_NAME1:-data1.json}
+    working_dir: /opt/app
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0"]
+    env_file:
+      - .env
+    ports:
+      - "${DATA_PORT1:?specify_port}:8000"
+    profiles:
+      - datasource
+
+  datasource_2:
+    build:
+      context: ./datasource_mock
+      dockerfile: Dockerfile
+    container_name: datasource_2
+    image: datasource
+    volumes:
+      - ./test_data/:/opt/app/data
+    environment:
+      - PATH_TO_DATA=/opt/app/data/${DATA_NAME1:-data2.json}
+    working_dir: /opt/app
+    command: [ "uvicorn", "main:app", "--host", "0.0.0.0" ]
+    env_file:
+      - .env
+    ports:
+      - "${DATA_PORT2:?specify_port}:8000"
+    profiles:
+      - datasource
+
+  datasource_3:
+    build:
+      context: ./datasource_mock
+      dockerfile: Dockerfile
+    container_name: datasource_3
+    image: datasource
+    volumes:
+      - ./test_data/:/opt/app/data
+    environment:
+      - PATH_TO_DATA=/opt/app/data/${DATA_NAME1:-data3.json}
+    working_dir: /opt/app
+    command: [ "uvicorn", "main:app", "--host", "0.0.0.0" ]
+    env_file:
+      - .env
+    ports:
+      - "${DATA_PORT3:?specify_port}:8000"
+    profiles:
+      - datasource
