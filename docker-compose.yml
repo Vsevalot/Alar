@@ -1,6 +1,24 @@
-version: '3.8'
+version: '3.9'
 
 services:
+  core:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      cache_from:
+        - python:3.10
+        - core:latest
+    container_name: core
+    image: core
+    volumes:
+      - .:/opt/app
+    working_dir: /opt/app
+    command: ["python", "cli.py"]
+    env_file:
+      - .env
+    ports:
+      - "${APP_EXTERNAL_PORT:?specify_port}:${APP_INTERNAL_PORT:?specify_port}"
+
   datasource_1:
     build:
       context: ./datasource_mock
