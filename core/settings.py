@@ -19,10 +19,12 @@ class AppConfig(BaseSettings):
 
 class DataConfig(BaseSettings):
     URLS: set[str] = {
-        'http://datasource_1:8000/get_data',
-        'http://datasource_2:8000/get_data',
-        'http://datasource_3:8000/get_data',
+        'http://datasource_1:8000',
+        'http://datasource_2:8000',
+        'http://datasource_3:8000',
         }
+    TIMEOUT: int = 2
+    ENDPOINT: str = '/get_data'
 
     class Config:
         env_file = '.env'

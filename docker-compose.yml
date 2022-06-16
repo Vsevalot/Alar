@@ -29,6 +29,7 @@ services:
       - ./test_data/:/opt/app/data
     environment:
       - PATH_TO_DATA=/opt/app/data/${DATA_NAME1:-data1.json}
+      - DELAY=${DATA_DELAY1:-0}
     working_dir: /opt/app
     command: ["uvicorn", "main:app", "--host", "0.0.0.0"]
     env_file:
@@ -48,8 +49,9 @@ services:
       - ./test_data/:/opt/app/data
     environment:
       - PATH_TO_DATA=/opt/app/data/${DATA_NAME1:-data2.json}
+      - DELAY=${DATA_DELAY2:-0}
     working_dir: /opt/app
-    command: [ "uvicorn", "main:app", "--host", "0.0.0.0" ]
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0"]
     env_file:
       - .env
     ports:
@@ -67,8 +69,9 @@ services:
       - ./test_data/:/opt/app/data
     environment:
       - PATH_TO_DATA=/opt/app/data/${DATA_NAME1:-data3.json}
+      - DELAY=${DATA_DELAY3:-0}
     working_dir: /opt/app
-    command: [ "uvicorn", "main:app", "--host", "0.0.0.0" ]
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0"]
     env_file:
       - .env
     ports:

@@ -1,6 +1,7 @@
 from logging import Logger
 import functools
 
+from core.clients import DataClient
 from core.api import definitions
 from core.settings import Config, AppConfig
 from core.api.v1.routes import get_routes
@@ -23,6 +24,10 @@ async def _on_startup(
         level=config.app.LOG_LEVEL,
     )
     application.config = config
+    application.data_client = DataClient(
+        get_data_endpoint=config.data.ENDPOINT,
+        timeout=config.data.TIMEOUT,
+    )
 
 
 def create(config: Config) -> definitions.Application:
