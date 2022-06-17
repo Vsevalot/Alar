@@ -13,6 +13,16 @@ def json_response(
     )
 
 
+def error_response(
+        message: str,
+        status: int = 404,
+) -> fastapi.responses.ORJSONResponse:
+    return json_response(
+        content=message,
+        status_code=status,
+    )
+
+
 class Status(BaseModel):
     ok: bool
     details: typing.Optional[str]
@@ -36,5 +46,23 @@ class Data(BaseModel):
     name: str
 
 
-class DataResponse(BaseModel):
+class DataListResponse(BaseModel):
     result: list[Data]
+
+
+class User(BaseModel):
+    id: int
+    name: str
+    permission: str
+
+
+class UserResponse(BaseModel):
+    result: User
+
+
+class UserListResponse(BaseModel):
+    result: list[User]
+
+
+class UserMutableResponse(BaseModel):
+    result: str

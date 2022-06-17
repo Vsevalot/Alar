@@ -31,8 +31,29 @@ class DataConfig(BaseSettings):
         env_file_encoding = 'utf-8'
         env_prefix = 'DATA_'
 
+
+class DBConfig(BaseSettings):
+    DSN: str = 'postgresql+asyncpg://postgres:postgres@db:5432/core_db'
+
+    class Config:
+        env_file = '.env'
+        env_file_encoding = 'utf-8'
+        env_prefix = 'DB_'
+
+
+class AuthConfig(BaseSettings):
+    SERVICE_SECRET: str = 'service_secret'
+
+    class Config:
+        env_file = '.env'
+        env_file_encoding = 'utf-8'
+        env_prefix = 'AUTH_'
+
+
 class Config:
     app = AppConfig()
     data = DataConfig()
+    db = DBConfig()
+    auth = AuthConfig()
 
 config = Config()

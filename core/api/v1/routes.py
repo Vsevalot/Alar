@@ -37,15 +37,80 @@ def get_routes() -> typing.Sequence[RouteParams]:
         ),
         RouteParams(
             path='/api/v1/data',
-            endpoint=views.data,
+            endpoint=views.get_data,
             responses={
                 200: ResponseParam(
-                    model=schemas.responses.DataResponse,
+                    model=schemas.responses.DataListResponse,
                 ),
                 500: ResponseParam(
                     model=schemas.responses.Error,
                 ),
             },
             methods=('GET',),
+        ),
+        RouteParams(
+            path='/api/v1/users',
+            endpoint=views.get_users,
+            responses={
+                200: ResponseParam(
+                    model=schemas.responses.UserListResponse,
+                ),
+                500: ResponseParam(
+                    model=schemas.responses.Error,
+                ),
+            },
+            methods=('GET',),
+        ),
+        RouteParams(
+            path='/api/v1/users',
+            endpoint=views.create_user,
+            responses={
+                200: ResponseParam(
+                    model=schemas.responses.UserResponse,
+                ),
+                500: ResponseParam(
+                    model=schemas.responses.Error,
+                ),
+            },
+            methods=('POST',),
+        ),
+        RouteParams(
+            path='/api/v1/users/{user_id}',
+            endpoint=views.get_user,
+            responses={
+                200: ResponseParam(
+                    model=schemas.responses.UserResponse,
+                ),
+                500: ResponseParam(
+                    model=schemas.responses.Error,
+                ),
+            },
+            methods=('GET',),
+        ),
+        RouteParams(
+            path='/api/v1/users/{user_id}',
+            endpoint=views.update_user,
+            responses={
+                200: ResponseParam(
+                    model=schemas.responses.UserMutableResponse,
+                ),
+                500: ResponseParam(
+                    model=schemas.responses.Error,
+                ),
+            },
+            methods=('PUT',),
+        ),
+        RouteParams(
+            path='/api/v1/users/{user_id}',
+            endpoint=views.delete_user,
+            responses={
+                200: ResponseParam(
+                    model=schemas.responses.UserMutableResponse,
+                ),
+                500: ResponseParam(
+                    model=schemas.responses.Error,
+                ),
+            },
+            methods=('DELETE',),
         ),
     )
