@@ -1,10 +1,11 @@
 from logging import Logger
 import functools
 
-from core.clients import DataClient
+from core.clients import DataClient, DBClient
 from core.api import definitions
 from core.settings import Config, AppConfig
 from core.api.v1.routes import get_routes
+from core.api.v1.middleware import exception_middleware, logger_middleware
 
 
 def _get_app(config: AppConfig) -> definitions.Application:
@@ -28,6 +29,9 @@ async def _on_startup(
         get_data_endpoint=config.data.ENDPOINT,
         timeout=config.data.TIMEOUT,
     )
+    application.db_client = DBClient(
+        db_dsn=config.db.DSN,
+    )
 
 
 def create(config: Config) -> definitions.Application:
@@ -40,6 +44,8 @@ def create(config: Config) -> definitions.Application:
             config=config,
         ),
     )
+    app.middleware('http')(logger_middleware)
+    app.middleware('http')(exception_middleware)
     for route in get_routes():
         app.router.add_api_route(**route)
 

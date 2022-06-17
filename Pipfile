@@ -3,11 +3,6 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
-[[source]]
-url = "https://nexus.local.playrix.com/repository/playrix-pypi/simple"
-verify_ssl = true
-name = "nexus"
-
 [packages]
 aiohttp = "==3.7.4"
 uvicorn = { extras = ["standard"], version = "0.15.0" }

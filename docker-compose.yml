@@ -19,6 +19,29 @@ services:
     ports:
       - "${APP_EXTERNAL_PORT:?specify_port}:${APP_INTERNAL_PORT:?specify_port}"
 
+  db:
+    image: postgres:14.2
+    container_name: core-db
+    volumes:
+      - core_pgdata:/var/lib/postgresql/data
+    ports:
+      - ${POSTGRES_EXTERNAL_PORT}:${POSTGRES_INTERNAL_PORT}
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_DB=${CORE_DB}
+
+#  migrations:
+#    container_name: core_migrations
+#    image: core
+#    volumes:
+#      - .:/opt/app
+#    working_dir: /opt/app/core/db
+#    command: ["alembic", "upgrade", "head"]
+#    env_file:
+#      - .env
+
   datasource_1:
     build:
       context: ./datasource_mock
@@ -36,8 +59,6 @@ services:
       - .env
     ports:
       - "${DATA_PORT1:?specify_port}:8000"
-    profiles:
-      - datasource
 
   datasource_2:
     build:
@@ -56,8 +77,6 @@ services:
       - .env
     ports:
       - "${DATA_PORT2:?specify_port}:8000"
-    profiles:
-      - datasource
 
   datasource_3:
     build:
@@ -76,5 +95,6 @@ services:
       - .env
     ports:
       - "${DATA_PORT3:?specify_port}:8000"
-    profiles:
-      - datasource
+
+volumes:
+  core_pgdata:
